@@ -7,25 +7,33 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		244B4E9D24B330250027A3FB /* addTimeTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 244B4E9C24B330250027A3FB /* addTimeTVC.swift */; };
+		245C654824C0595800D480C4 /* timerPageTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 245C654724C0595800D480C4 /* timerPageTVC.swift */; };
+		245C654A24C05B1500D480C4 /* timerPageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 245C654924C05B1500D480C4 /* timerPageTableViewCell.swift */; };
+		2471CED524C077A3003E884D /* mapPageTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2471CED424C077A3003E884D /* mapPageTVC.swift */; };
 		24AF73D624B17D0400B7360D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24AF73D524B17D0400B7360D /* AppDelegate.swift */; };
 		24AF73D824B17D0400B7360D /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24AF73D724B17D0400B7360D /* SceneDelegate.swift */; };
-		24AF73DA24B17D0400B7360D /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24AF73D924B17D0400B7360D /* ViewController.swift */; };
 		24AF73DD24B17D0400B7360D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 24AF73DB24B17D0400B7360D /* Main.storyboard */; };
 		24AF73E024B17D0400B7360D /* LIFE_MARK.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 24AF73DE24B17D0400B7360D /* LIFE_MARK.xcdatamodeld */; };
 		24AF73E224B17D0500B7360D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 24AF73E124B17D0500B7360D /* Assets.xcassets */; };
 		24AF73E524B17D0500B7360D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 24AF73E324B17D0500B7360D /* LaunchScreen.storyboard */; };
+		24E1025F24B19C06007F68B4 /* colorExtention.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24E1025E24B19C06007F68B4 /* colorExtention.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		244B4E9C24B330250027A3FB /* addTimeTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = addTimeTVC.swift; sourceTree = "<group>"; };
+		245C654724C0595800D480C4 /* timerPageTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = timerPageTVC.swift; sourceTree = "<group>"; };
+		245C654924C05B1500D480C4 /* timerPageTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = timerPageTableViewCell.swift; sourceTree = "<group>"; };
+		2471CED424C077A3003E884D /* mapPageTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = mapPageTVC.swift; sourceTree = "<group>"; };
 		24AF73D224B17D0400B7360D /* LIFE MARK.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "LIFE MARK.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		24AF73D524B17D0400B7360D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		24AF73D724B17D0400B7360D /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		24AF73D924B17D0400B7360D /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		24AF73DC24B17D0400B7360D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		24AF73DF24B17D0400B7360D /* LIFE_MARK.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = LIFE_MARK.xcdatamodel; sourceTree = "<group>"; };
 		24AF73E124B17D0500B7360D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		24AF73E424B17D0500B7360D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		24AF73E624B17D0500B7360D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		24E1025E24B19C06007F68B4 /* colorExtention.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = colorExtention.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -39,6 +47,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		24809C1824B1F3E800D8F9B2 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				24AF73DE24B17D0400B7360D /* LIFE_MARK.xcdatamodeld */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
 		24AF73C924B17D0400B7360D = {
 			isa = PBXGroup;
 			children = (
@@ -60,14 +76,42 @@
 			children = (
 				24AF73D524B17D0400B7360D /* AppDelegate.swift */,
 				24AF73D724B17D0400B7360D /* SceneDelegate.swift */,
-				24AF73D924B17D0400B7360D /* ViewController.swift */,
 				24AF73DB24B17D0400B7360D /* Main.storyboard */,
 				24AF73E124B17D0500B7360D /* Assets.xcassets */,
 				24AF73E324B17D0500B7360D /* LaunchScreen.storyboard */,
 				24AF73E624B17D0500B7360D /* Info.plist */,
-				24AF73DE24B17D0400B7360D /* LIFE_MARK.xcdatamodeld */,
+				24809C1824B1F3E800D8F9B2 /* Model */,
+				24E1026524B1A1F5007F68B4 /* View */,
+				24E1026024B19D83007F68B4 /* controller */,
+				24E1025D24B19BD7007F68B4 /* Extension */,
 			);
 			path = "LIFE MARK";
+			sourceTree = "<group>";
+		};
+		24E1025D24B19BD7007F68B4 /* Extension */ = {
+			isa = PBXGroup;
+			children = (
+				24E1025E24B19C06007F68B4 /* colorExtention.swift */,
+			);
+			path = Extension;
+			sourceTree = "<group>";
+		};
+		24E1026024B19D83007F68B4 /* controller */ = {
+			isa = PBXGroup;
+			children = (
+				245C654724C0595800D480C4 /* timerPageTVC.swift */,
+				244B4E9C24B330250027A3FB /* addTimeTVC.swift */,
+				2471CED424C077A3003E884D /* mapPageTVC.swift */,
+			);
+			path = controller;
+			sourceTree = "<group>";
+		};
+		24E1026524B1A1F5007F68B4 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				245C654924C05B1500D480C4 /* timerPageTableViewCell.swift */,
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -141,9 +185,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				245C654A24C05B1500D480C4 /* timerPageTableViewCell.swift in Sources */,
+				244B4E9D24B330250027A3FB /* addTimeTVC.swift in Sources */,
+				24E1025F24B19C06007F68B4 /* colorExtention.swift in Sources */,
+				2471CED524C077A3003E884D /* mapPageTVC.swift in Sources */,
 				24AF73E024B17D0400B7360D /* LIFE_MARK.xcdatamodeld in Sources */,
-				24AF73DA24B17D0400B7360D /* ViewController.swift in Sources */,
 				24AF73D624B17D0400B7360D /* AppDelegate.swift in Sources */,
+				245C654824C0595800D480C4 /* timerPageTVC.swift in Sources */,
 				24AF73D824B17D0400B7360D /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -289,6 +337,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = H786VSWB8F;
 				INFOPLIST_FILE = "LIFE MARK/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -306,6 +355,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = H786VSWB8F;
 				INFOPLIST_FILE = "LIFE MARK/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
