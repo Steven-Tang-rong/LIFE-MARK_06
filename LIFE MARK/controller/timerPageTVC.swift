@@ -14,6 +14,16 @@ class timerPageTVC: UITableViewController, NSFetchedResultsControllerDelegate {
     var timePageData: [LifeMarker] = []
     var fetchResultController: NSFetchedResultsController<LifeMarker>!
     
+    var cellTimeLabel = String()
+    var cellTitleText = String()
+    var cellMainText = String()
+    
+    var cellOtherTextView = String()
+    
+    
+    
+
+    
     @IBOutlet var emptyTimePageView: UIView!
     
     @IBAction func backTime(segue: UIStoryboardSegue) {
@@ -22,15 +32,14 @@ class timerPageTVC: UITableViewController, NSFetchedResultsControllerDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.navigationController?.navigationBar.barTintColor = #colorLiteral(red: 0.9983078837, green: 0.9106715322, blue: 0.8389384151, alpha: 1)
         
         // Prepare the empty view
         tableView.backgroundView = emptyTimePageView
-        tableView.backgroundView?.backgroundColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
+        tableView.backgroundView?.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
         tableView.backgroundView?.isHidden = true
         
         
-        //Fetch data from Coredata
+        //Fetch data from CoreData
         let fetchRequest: NSFetchRequest<LifeMarker> = LifeMarker.fetchRequest()
         let sortDescriptor = NSSortDescriptor(key: "timerTitle", ascending: true)
         fetchRequest.sortDescriptors = [sortDescriptor]
@@ -80,26 +89,38 @@ class timerPageTVC: UITableViewController, NSFetchedResultsControllerDelegate {
         
         //DatePicker
         if timePageData[indexPath.row].datePicker != nil {
-            cell.showSetTime.text = timePageData[indexPath.row].datePicker
+            let formatter = DateFormatter()
+            formatter.locale = Locale(identifier: "zh_TW")
+            formatter.timeStyle = .short
+            
+            let formatterString = formatter.string(from: timePageData[indexPath.row].datePicker!)
+            
+            cell.showSetTime.text = formatterString
+            cellTimeLabel = cell.showSetTime.text!
             print("success")
-        }else {
-            cell.showSetTime.text = "Not Set"
-            print("Fail")
         }
 
-        //Labels
+        //標題資料
         if timePageData[indexPath.row].timerTitle != nil {
             cell.timerTitle.text = timePageData[indexPath.row].timerTitle
-        }else {
-            cell.timerTitle.text = "Not Set"
+            cellTitleText = cell.timerTitle.text!
         }
         
+        //主題資料
         if timePageData[indexPath.row].timerMainTask != nil {
             cell.timerMainTask.text = timePageData[indexPath.row].timerMainTask
-        }else {
-            cell.timerMainTask.text = "Not Set"
+            cellMainText = cell.timerMainTask.text!
         }
         
+        //其他事項資料
+        if timePageData[indexPath.row].timerOtherTask != nil {
+            cellOtherTextView = timePageData[indexPath.row].timerOtherTask!
+            print("TextView Success")
+        }else {
+            cellOtherTextView = "輸入事項"
+            print("TextView Fail")
+
+        }
         
         // Configure the cell...
 
@@ -136,6 +157,66 @@ class timerPageTVC: UITableViewController, NSFetchedResultsControllerDelegate {
             timePageData = fetchedObjects as! [LifeMarker]
         }
     }
+    
+    func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+        tableView.endUpdates()
+    }
+    
+    //MARK: - 往左滑動刪除列
+    override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        
+        let deleteAction = UIContextualAction(style: .destructive, title: "刪除") {
+            (action, sourceView, completionHandler) in
+            
+            if let appDelegate = (UIApplication.shared.delegate as? AppDelegate) {
+                let context = appDelegate.persistentContainer.viewContext
+                let timeToDelete = self.fetchResultController.object(at: indexPath)
+                context.delete(timeToDelete)
+                
+                appDelegate.saveContext()
+            }
+            
+            completionHandler(true)
+        }
+        
+        deleteAction.backgroundColor = #colorLiteral(red: 1, green: 0.4934554561, blue: 0.5243053216, alpha: 1)
+        deleteAction.image = UIImage(systemName: "trash")
+        
+        
+        let swipeConfiguration = UISwipeActionsConfiguration(actions: [deleteAction])
+        
+        return swipeConfiguration
+        
+        
+        
+    }
+    
+//MARK: - 傳送資料至timeContentTVC
+    
+    @IBSegueAction func updateTimeData(_ coder: NSCoder) -> timeContentTVC? {
+        let destinationController = timeContentTVC(coder: coder)
+        
+        if  destinationController?.showUpdateTime?.text != nil {
+            destinationController?.showUpdateTime?.text = cellTimeLabel
+            print("Segue Success 0 ")
+        }else {
+             destinationController?.showUpdateTime?.text = "NO DATA"
+            print("Segue Fail 0 ")
+        }
+        
+        //標題欄
+        destinationController?.updateTimeTitle?.text = cellTitleText
+        
+        //主題欄
+        destinationController?.updateTimeMain?.text = cellMainText
+        
+        //其他事項欄
+        destinationController?.updateTimeOther?.text = cellOtherTextView
+        
+        return destinationController
+    }
+    
+    
     
     /*
     // Override to support conditional editing of the table view.
@@ -182,4 +263,15 @@ class timerPageTVC: UITableViewController, NSFetchedResultsControllerDelegate {
     }
     */
 
+    
+    /*override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "showTimeUpdates" {
+            if let indexPath = tableView.indexPathsForSelectedRows {
+                
+                let destinationController = segue.destination as! timeContentTVC
+                
+                
+            }
+        }
+    }*/
  }

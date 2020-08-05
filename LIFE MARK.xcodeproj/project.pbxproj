@@ -17,6 +17,7 @@
 		24AF73E024B17D0400B7360D /* LIFE_MARK.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 24AF73DE24B17D0400B7360D /* LIFE_MARK.xcdatamodeld */; };
 		24AF73E224B17D0500B7360D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 24AF73E124B17D0500B7360D /* Assets.xcassets */; };
 		24AF73E524B17D0500B7360D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 24AF73E324B17D0500B7360D /* LaunchScreen.storyboard */; };
+		24CCB20F24D572E700C6B46C /* timeContentTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24CCB20E24D572E700C6B46C /* timeContentTVC.swift */; };
 		24E1025F24B19C06007F68B4 /* colorExtention.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24E1025E24B19C06007F68B4 /* colorExtention.swift */; };
 /* End PBXBuildFile section */
 
@@ -33,6 +34,7 @@
 		24AF73E124B17D0500B7360D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		24AF73E424B17D0500B7360D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		24AF73E624B17D0500B7360D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		24CCB20E24D572E700C6B46C /* timeContentTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = timeContentTVC.swift; sourceTree = "<group>"; };
 		24E1025E24B19C06007F68B4 /* colorExtention.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = colorExtention.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -101,6 +103,7 @@
 			children = (
 				245C654724C0595800D480C4 /* timerPageTVC.swift */,
 				244B4E9C24B330250027A3FB /* addTimeTVC.swift */,
+				24CCB20E24D572E700C6B46C /* timeContentTVC.swift */,
 				2471CED424C077A3003E884D /* mapPageTVC.swift */,
 			);
 			path = controller;
@@ -189,6 +192,7 @@
 				244B4E9D24B330250027A3FB /* addTimeTVC.swift in Sources */,
 				24E1025F24B19C06007F68B4 /* colorExtention.swift in Sources */,
 				2471CED524C077A3003E884D /* mapPageTVC.swift in Sources */,
+				24CCB20F24D572E700C6B46C /* timeContentTVC.swift in Sources */,
 				24AF73E024B17D0400B7360D /* LIFE_MARK.xcdatamodeld in Sources */,
 				24AF73D624B17D0400B7360D /* AppDelegate.swift in Sources */,
 				245C654824C0595800D480C4 /* timerPageTVC.swift in Sources */,

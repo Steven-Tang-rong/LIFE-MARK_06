@@ -1,45 +1,37 @@
 //
-//  addTimeTVC.swift
+//  timeContentTVC.swift
 //  LIFE MARK
 //
-//  Created by TANG,QI-RONG on 2020/7/6.
+//  Created by TANG,QI-RONG on 2020/8/1.
 //  Copyright © 2020 Steven. All rights reserved.
 //
 
 import UIKit
 import CoreData
 
-class addTimeTVC: UITableViewController {
+class timeContentTVC: UITableViewController {
 
-    var addTimeCoreData: LifeMarker!
-   // var setDateValue: Date?
+    var updateTimeCoreData = LifeMarker.self
     
-    @IBOutlet weak var myDatePickerData: UIDatePicker!
 
-    @IBOutlet weak var TitleTextField: UITextField!
+
+    @IBOutlet weak var showUpdateTime: UILabel!
     
-    @IBOutlet weak var mainTextField: UITextField!
+    @IBOutlet weak var updateTimeTitle: UITextField!
     
-    @IBOutlet weak var otherTextView: UITextView!
+    @IBOutlet weak var updateTimeMain: UITextField!
     
-    
-    @IBAction func myDatePickerAction(_ sender: Any) {
-        // 設置要顯示在 UILabel 的日期時間格式
-        
-        let currentTime = Date()
-        
-        myDatePickerData.locale = Locale(identifier: "zh_TW")
-        myDatePickerData.datePickerMode = .dateAndTime
-        myDatePickerData.date = currentTime
-            
-    }
-        
-    
+    @IBOutlet weak var updateTimeOther: UITextView!
+  
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        
+        // Uncomment the following line to preserve selection between presentations
+        // self.clearsSelectionOnViewWillAppear = false
+
+        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
+        // self.navigationItem.rightBarButtonItem = self.editButtonItem
     }
 
     // MARK: - Table view data source
@@ -53,30 +45,10 @@ class addTimeTVC: UITableViewController {
         // #warning Incomplete implementation, return the number of rows
         return 4
     }
-    
-    @IBAction func saveButtonTapped(_ sender: Any) {
-        
-        if let appDelegate = (UIApplication.shared.delegate as? AppDelegate) {
-            addTimeCoreData = LifeMarker(context: appDelegate.persistentContainer.viewContext)
-            
-            addTimeCoreData.datePicker = myDatePickerData.date
-            addTimeCoreData.timerTitle = TitleTextField.text
-            addTimeCoreData.timerMainTask = mainTextField.text
-            addTimeCoreData.timerOtherTask = otherTextView.text
-            
-            
-            print("Saving data to contect..")
-            appDelegate.saveContext()
-        }
-    
-        dismiss(animated: true, completion: nil)
-
- }
 
     
+
     
-        
-  
     /*
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
@@ -132,17 +104,4 @@ class addTimeTVC: UITableViewController {
     }
     */
 
-    /*
-    let formatter = DateFormatter()
-    formatter.locale = Locale(identifier: "zh_TW")
-    formatter.timeStyle = .short
-
-    
-    let formatterString = formatter.string(from: myDatePickerData.date)*/
 }
-
-
-
-
-
-
