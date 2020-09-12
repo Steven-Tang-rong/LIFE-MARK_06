@@ -12,7 +12,9 @@ import CoreData
 class addTimeTVC: UITableViewController {
 
     var addTimeCoreData: LifeMarker!
-   // var setDateValue: Date?
+    var addCellTitleText = String()
+    var addCellMainText = String()
+    var addCellOtherText = String()
     
     @IBOutlet weak var myDatePickerData: UIDatePicker!
 
@@ -22,23 +24,33 @@ class addTimeTVC: UITableViewController {
     
     @IBOutlet weak var otherTextView: UITextView!
     
-    
     @IBAction func myDatePickerAction(_ sender: Any) {
         // 設置要顯示在 UILabel 的日期時間格式
-        
-        let currentTime = Date()
-        
         myDatePickerData.locale = Locale(identifier: "zh_TW")
-        myDatePickerData.datePickerMode = .dateAndTime
-        myDatePickerData.date = currentTime
+        myDatePickerData.datePickerMode = .time
             
     }
-        
+         
+    func timeNotification() {
+    let content = UNMutableNotificationContent()
+        content.title       =  TitleTextField.text!
+        content.subtitle    =  mainTextField.text!
+        content.badge       = 1
+        content.sound       = UNNotificationSound(named:UNNotificationSoundName(rawValue: "Gintama.aiff"))
+          
+        let date            = myDatePickerData.date
+        let components      = Calendar.current.dateComponents([ .hour, .minute], from: date)
+        let trigger         = UNCalendarNotificationTrigger(dateMatching: components,
+                                                              repeats: false)
+        let request         = UNNotificationRequest(identifier: "notificationl",
+                                                      content: content, trigger: trigger)
+       
+         UNUserNotificationCenter.current().add(request, withCompletionHandler: nil)
+     }
     
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
-
         
     }
 
@@ -60,22 +72,33 @@ class addTimeTVC: UITableViewController {
             addTimeCoreData = LifeMarker(context: appDelegate.persistentContainer.viewContext)
             
             addTimeCoreData.datePicker = myDatePickerData.date
-            addTimeCoreData.timerTitle = TitleTextField.text
-            addTimeCoreData.timerMainTask = mainTextField.text
+           
+            if TitleTextField.text != "" {
+                addTimeCoreData.timerTitle = TitleTextField.text
+            }else {
+                TitleTextField.text = "沒有輸入標題"
+                addTimeCoreData.timerTitle = TitleTextField.text
+            }
+            
+            if mainTextField.text != "" {
+                addTimeCoreData.timerMainTask = mainTextField.text
+            }else {
+                mainTextField.text = "沒有輸入訊息"
+                addTimeCoreData.timerMainTask = mainTextField.text
+            }
+            
+            
             addTimeCoreData.timerOtherTask = otherTextView.text
+            addTimeCoreData.timerSwitch = true
             
-            
-            print("Saving data to contect..")
+            timeNotification()
+            print("Saving data to contect")
             appDelegate.saveContext()
         }
     
         dismiss(animated: true, completion: nil)
 
  }
-
-    
-    
-        
   
     /*
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

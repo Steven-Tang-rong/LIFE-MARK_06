@@ -18,7 +18,8 @@ class timerPageTableViewCell: UITableViewCell {
     @IBOutlet weak var timerMainTask: UILabel!
     
     
-    @IBOutlet weak var timerSwitch: UISwitch!
+    @IBOutlet weak var timerSwitchOutlet: UISwitch!
+    
     
     override func awakeFromNib() {
         super.awakeFromNib()

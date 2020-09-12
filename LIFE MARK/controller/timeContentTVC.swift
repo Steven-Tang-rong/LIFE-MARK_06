@@ -11,28 +11,76 @@ import CoreData
 
 class timeContentTVC: UITableViewController {
 
-    var updateTimeCoreData = LifeMarker.self
+    var updateTimeCoreData: LifeMarker!
+   
+    var dateLabel = Date()
     
-
-
-    @IBOutlet weak var showUpdateTime: UILabel!
-    
-    @IBOutlet weak var updateTimeTitle: UITextField!
-    
-    @IBOutlet weak var updateTimeMain: UITextField!
-    
-    @IBOutlet weak var updateTimeOther: UITextView!
+    var someTitleLabel = String()
+    var someMainLabel = String()
+    var someOtherLabel = String()
   
+    // prepare func
+    var timerTitle = String()
+    var timerMain = String()
+    var timerOther = String()
+
+    var container: NSPersistentContainer!
+    
+    @IBOutlet weak var changeDatePicker: UIDatePicker!
+    
+    @IBOutlet weak var changeTimeTitle: UITextField!
+    
+    @IBOutlet weak var changeTimeMain: UITextField!
+    
+    @IBOutlet weak var changeTimeOther: UITextView!
+    
+    func timeNotification() {
+    let content = UNMutableNotificationContent()
+        content.title       =  timerTitle
+        content.subtitle    =  timerMain
+        content.badge       = 1
+        content.sound       = UNNotificationSound(named:UNNotificationSoundName(rawValue: "Gintama.aiff"))
+          
+        let date            = changeDatePicker.date
+        let components      = Calendar.current.dateComponents([ .hour, .minute], from: date)
+        let trigger         = UNCalendarNotificationTrigger(dateMatching: components,
+                                                              repeats: false)
+        let request         = UNNotificationRequest(identifier: "notificationl",
+                                                      content: content, trigger: trigger)
+       
+         UNUserNotificationCenter.current().add(request, withCompletionHandler: nil)
+     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem
+    
+        if let updateTimeCoreData = updateTimeCoreData{
+            changeDatePicker.date = updateTimeCoreData.datePicker!
+            changeTimeTitle.text = updateTimeCoreData.timerTitle
+            changeTimeMain.text = updateTimeCoreData.timerMainTask
+            changeTimeOther.text = updateTimeCoreData.timerOtherTask
+        }
+        
+        dateLabel   = changeDatePicker.date
+        timerTitle  = changeTimeTitle.text!
+        timerMain   = changeTimeMain.text!
+        timerOther  = changeTimeOther.text!
     }
+  
+//MARK: - updating
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+       
+        updateTimeCoreData.datePicker = changeDatePicker.date
+        updateTimeCoreData.timerTitle = changeTimeTitle.text
+        updateTimeCoreData.timerMainTask = changeTimeMain.text
+        updateTimeCoreData.timerOtherTask = changeTimeOther.text
+        updateTimeCoreData.timerSwitch = true
+        
+        timeNotification()
+    }
+    
+ 
 
     // MARK: - Table view data source
 
@@ -48,6 +96,7 @@ class timeContentTVC: UITableViewController {
 
     
 
+    
     
     /*
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

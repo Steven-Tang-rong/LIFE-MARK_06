@@ -13,22 +13,80 @@ class timerPageTVC: UITableViewController, NSFetchedResultsControllerDelegate {
 
     var timePageData: [LifeMarker] = []
     var fetchResultController: NSFetchedResultsController<LifeMarker>!
-    
-    var cellTimeLabel = String()
+
+    var cellTimeDate = Date()
     var cellTitleText = String()
     var cellMainText = String()
-    
-    var cellOtherTextView = String()
-    
-    
-    
-
+    var cellOtherText = String()
+    var container: NSPersistentContainer!
     
     @IBOutlet var emptyTimePageView: UIView!
-    
+        
     @IBAction func backTime(segue: UIStoryboardSegue) {
             dismiss(animated: true, completion: nil)
         }
+    
+   
+    
+    //MARK: - unwindSegue（更新資料）
+    
+    @IBAction func unwindTotimePageTVC(_ unwindSegue: UIStoryboardSegue) {
+        
+       if let sourceViewController = unwindSegue.source as? timeContentTVC, let updateTimeCoreData = sourceViewController.updateTimeCoreData {
+        
+        if let indexPath = tableView.indexPathForSelectedRow {
+            timePageData[indexPath.row] = updateTimeCoreData
+            
+            let unwindIndexPath = IndexPath(row: 0, section: 0)
+            tableView.reloadRows(at: [unwindIndexPath], with: .automatic)
+            container.saveContext()
+        }
+      }
+        tableView.reloadData()
+    }
+    
+
+    func timeNotification() {
+        let content = UNMutableNotificationContent()
+            content.title       =  cellTitleText
+            content.subtitle    =  cellMainText
+            content.badge       = 1
+            content.sound       = UNNotificationSound(named:UNNotificationSoundName(rawValue: "Gintama.aiff"))
+              
+            let date            = cellTimeDate
+            let components      = Calendar.current.dateComponents([ .hour, .minute], from: date)
+            let trigger         = UNCalendarNotificationTrigger(dateMatching: components,
+                                                                  repeats: false)
+            let request         = UNNotificationRequest(identifier: "notificationl",
+                                                          content: content, trigger: trigger)
+           
+             UNUserNotificationCenter.current().add(request, withCompletionHandler: nil)
+         }
+    
+    func removeTimeNotification() {
+        UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: ["notificationl"])
+    }
+ 
+//Notification IBAction
+    @IBAction func notificationSwitch(_ sender: UISwitch) {
+            let point = sender.convert(CGPoint.zero, to: tableView)
+            if let indexPath = tableView.indexPathForRow(at: point) {
+                timePageData[indexPath.row].timerSwitch = sender.isOn
+               print(point)
+                                
+                if sender.isOn == timePageData[indexPath.row].timerSwitch {
+                   print("Switch true")
+                   timeNotification()
+
+                }else if sender.isOn == timePageData[indexPath.row].timerSwitch{
+                    print("Switch false")
+                    removeTimeNotification()
+
+            }
+            container.saveContext()
+        }
+    }
+    //MARK: - viewDidLoad
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -72,7 +130,6 @@ class timerPageTVC: UITableViewController, NSFetchedResultsControllerDelegate {
             tableView.separatorStyle = .none
         }
         
-        
         return 1
     }
 
@@ -81,52 +138,63 @@ class timerPageTVC: UITableViewController, NSFetchedResultsControllerDelegate {
         return timePageData.count
     }
 
+//MARK: - 表格插入資料
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-       
+      
         let cellIdentifier = "timerPageCell"
-        let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as! timerPageTableViewCell
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as? timerPageTableViewCell else { return UITableViewCell() }
+
+        cellTimeDate = timePageData[indexPath.row].datePicker!
+        cellTitleText = timePageData[indexPath.row].timerTitle!
+        cellMainText = timePageData[indexPath.row].timerMainTask!
+   
+        cell.timerSwitchOutlet.isOn = timePageData[indexPath.row].timerSwitch
         
-        //DatePicker
         if timePageData[indexPath.row].datePicker != nil {
             let formatter = DateFormatter()
-            formatter.locale = Locale(identifier: "zh_TW")
-            formatter.timeStyle = .short
-            
-            let formatterString = formatter.string(from: timePageData[indexPath.row].datePicker!)
-            
-            cell.showSetTime.text = formatterString
-            cellTimeLabel = cell.showSetTime.text!
-            print("success")
-        }
-
+                formatter.locale        = Locale(identifier: "zh_TW")
+                formatter.timeStyle     = .short
+            let formatterString     = formatter.string(from: cellTimeDate)
+                cell.showSetTime.text   = formatterString
+            }
+        
         //標題資料
         if timePageData[indexPath.row].timerTitle != nil {
-            cell.timerTitle.text = timePageData[indexPath.row].timerTitle
-            cellTitleText = cell.timerTitle.text!
+            cell.timerTitle.text    = timePageData[indexPath.row].timerTitle
+            cellTitleText           = cell.timerTitle.text!
         }
         
         //主題資料
         if timePageData[indexPath.row].timerMainTask != nil {
             cell.timerMainTask.text = timePageData[indexPath.row].timerMainTask
-            cellMainText = cell.timerMainTask.text!
+            cellMainText            = cell.timerMainTask.text!
         }
+        
         
         //其他事項資料
         if timePageData[indexPath.row].timerOtherTask != nil {
-            cellOtherTextView = timePageData[indexPath.row].timerOtherTask!
-            print("TextView Success")
+            cellOtherText       = timePageData[indexPath.row].timerOtherTask!
         }else {
-            cellOtherTextView = "輸入事項"
-            print("TextView Fail")
-
+            cellOtherText = "輸入事項"
         }
         
-        // Configure the cell...
-
         return cell
     }
     
+   /*   override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let cellIdentifier = "timerPageCell"
+        let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as! timerPageTableViewCell
+        
+         cell.timerSwitchOutlet.isOn = timePageData[indexPath.row].timerSwitch
+        
+       if timePageData[indexPath.row].timerSwitch == true{
+            cell.timerSwitchOutlet.isOn = true
+        }else if timePageData[indexPath.row].timerSwitch == false{
+            cell.timerSwitchOutlet.isOn = false
+        }
+        tableView.reloadData()
+    }*/
     
     // MARK: - NSFetchedResultsControllerDelegate methods
     
@@ -196,26 +264,15 @@ class timerPageTVC: UITableViewController, NSFetchedResultsControllerDelegate {
     @IBSegueAction func updateTimeData(_ coder: NSCoder) -> timeContentTVC? {
         let destinationController = timeContentTVC(coder: coder)
         
-        if  destinationController?.showUpdateTime?.text != nil {
-            destinationController?.showUpdateTime?.text = cellTimeLabel
-            print("Segue Success 0 ")
-        }else {
-             destinationController?.showUpdateTime?.text = "NO DATA"
-            print("Segue Fail 0 ")
+        if let row = tableView.indexPathForSelectedRow?.row{
+  
+            destinationController?.updateTimeCoreData = timePageData[row]
         }
-        
-        //標題欄
-        destinationController?.updateTimeTitle?.text = cellTitleText
-        
-        //主題欄
-        destinationController?.updateTimeMain?.text = cellMainText
-        
-        //其他事項欄
-        destinationController?.updateTimeOther?.text = cellOtherTextView
-        
+
         return destinationController
     }
     
+
     
     
     /*
@@ -274,4 +331,5 @@ class timerPageTVC: UITableViewController, NSFetchedResultsControllerDelegate {
             }
         }
     }*/
+   
  }
