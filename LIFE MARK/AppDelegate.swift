@@ -106,8 +106,6 @@ extension NSPersistentContainer {
 }
 
 //MARK: - 通知
-
-    
     extension AppDelegate: UNUserNotificationCenterDelegate{
     
      func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
@@ -119,7 +117,6 @@ extension NSPersistentContainer {
            
             let _: UNNotificationContent = response.notification.request.content
               
-            
                 completionHandler()
         }
         

@@ -11,13 +11,16 @@
 		244B4E9D24B330250027A3FB /* addTimeTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 244B4E9C24B330250027A3FB /* addTimeTVC.swift */; };
 		245C654824C0595800D480C4 /* timerPageTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 245C654724C0595800D480C4 /* timerPageTVC.swift */; };
 		245C654A24C05B1500D480C4 /* timerPageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 245C654924C05B1500D480C4 /* timerPageTableViewCell.swift */; };
+		2479D471253082C500F3965E /* dayContantTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2479D470253082C500F3965E /* dayContantTVC.swift */; };
+		2479D4732530830B00F3965E /* addDayTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2479D4722530830B00F3965E /* addDayTVC.swift */; };
+		2489D9762530B9EF00DA96CF /* dayTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2489D9752530B9EF00DA96CF /* dayTableViewController.swift */; };
+		2489D9782530BA6500DA96CF /* dayPageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2489D9772530BA6500DA96CF /* dayPageTableViewCell.swift */; };
 		24AF73D624B17D0400B7360D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24AF73D524B17D0400B7360D /* AppDelegate.swift */; };
 		24AF73D824B17D0400B7360D /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24AF73D724B17D0400B7360D /* SceneDelegate.swift */; };
 		24AF73DD24B17D0400B7360D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 24AF73DB24B17D0400B7360D /* Main.storyboard */; };
 		24AF73E024B17D0400B7360D /* LIFE_MARK.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 24AF73DE24B17D0400B7360D /* LIFE_MARK.xcdatamodeld */; };
 		24AF73E524B17D0500B7360D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 24AF73E324B17D0500B7360D /* LaunchScreen.storyboard */; };
 		24B58B6D250C7E44007FFDBA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 24B58B6C250C7E44007FFDBA /* Assets.xcassets */; };
-		24B58B6F250C7F93007FFDBA /* otherThingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24B58B6E250C7F93007FFDBA /* otherThingViewController.swift */; };
 		24CCB20F24D572E700C6B46C /* timeContentTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24CCB20E24D572E700C6B46C /* timeContentTVC.swift */; };
 		24E1025F24B19C06007F68B4 /* colorExtention.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24E1025E24B19C06007F68B4 /* colorExtention.swift */; };
 /* End PBXBuildFile section */
@@ -27,6 +30,10 @@
 		244B4E9C24B330250027A3FB /* addTimeTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = addTimeTVC.swift; sourceTree = "<group>"; };
 		245C654724C0595800D480C4 /* timerPageTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = timerPageTVC.swift; sourceTree = "<group>"; };
 		245C654924C05B1500D480C4 /* timerPageTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = timerPageTableViewCell.swift; sourceTree = "<group>"; };
+		2479D470253082C500F3965E /* dayContantTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = dayContantTVC.swift; sourceTree = "<group>"; };
+		2479D4722530830B00F3965E /* addDayTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = addDayTVC.swift; sourceTree = "<group>"; };
+		2489D9752530B9EF00DA96CF /* dayTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = dayTableViewController.swift; sourceTree = "<group>"; };
+		2489D9772530BA6500DA96CF /* dayPageTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = dayPageTableViewCell.swift; sourceTree = "<group>"; };
 		24AF73D224B17D0400B7360D /* LIFE MARK.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "LIFE MARK.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		24AF73D524B17D0400B7360D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		24AF73D724B17D0400B7360D /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -35,7 +42,6 @@
 		24AF73E424B17D0500B7360D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		24AF73E624B17D0500B7360D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		24B58B6C250C7E44007FFDBA /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		24B58B6E250C7F93007FFDBA /* otherThingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = otherThingViewController.swift; sourceTree = "<group>"; };
 		24CCB20E24D572E700C6B46C /* timeContentTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = timeContentTVC.swift; sourceTree = "<group>"; };
 		24E1025E24B19C06007F68B4 /* colorExtention.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = colorExtention.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -107,7 +113,9 @@
 				245C654724C0595800D480C4 /* timerPageTVC.swift */,
 				244B4E9C24B330250027A3FB /* addTimeTVC.swift */,
 				24CCB20E24D572E700C6B46C /* timeContentTVC.swift */,
-				24B58B6E250C7F93007FFDBA /* otherThingViewController.swift */,
+				2489D9752530B9EF00DA96CF /* dayTableViewController.swift */,
+				2479D4722530830B00F3965E /* addDayTVC.swift */,
+				2479D470253082C500F3965E /* dayContantTVC.swift */,
 			);
 			path = controller;
 			sourceTree = "<group>";
@@ -116,6 +124,7 @@
 			isa = PBXGroup;
 			children = (
 				245C654924C05B1500D480C4 /* timerPageTableViewCell.swift */,
+				2489D9772530BA6500DA96CF /* dayPageTableViewCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -192,15 +201,18 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2479D471253082C500F3965E /* dayContantTVC.swift in Sources */,
 				245C654A24C05B1500D480C4 /* timerPageTableViewCell.swift in Sources */,
 				244B4E9D24B330250027A3FB /* addTimeTVC.swift in Sources */,
+				2489D9762530B9EF00DA96CF /* dayTableViewController.swift in Sources */,
 				24E1025F24B19C06007F68B4 /* colorExtention.swift in Sources */,
+				2479D4732530830B00F3965E /* addDayTVC.swift in Sources */,
 				24CCB20F24D572E700C6B46C /* timeContentTVC.swift in Sources */,
 				24AF73E024B17D0400B7360D /* LIFE_MARK.xcdatamodeld in Sources */,
 				24AF73D624B17D0400B7360D /* AppDelegate.swift in Sources */,
-				24B58B6F250C7F93007FFDBA /* otherThingViewController.swift in Sources */,
 				245C654824C0595800D480C4 /* timerPageTVC.swift in Sources */,
 				24AF73D824B17D0400B7360D /* SceneDelegate.swift in Sources */,
+				2489D9782530BA6500DA96CF /* dayPageTableViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

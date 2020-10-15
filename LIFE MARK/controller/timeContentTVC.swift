@@ -12,19 +12,10 @@ import CoreData
 class timeContentTVC: UITableViewController {
 
     var updateTimeCoreData: LifeMarker!
-   
-    var dateLabel = Date()
+    var container: NSPersistentContainer!
     
-    var someTitleLabel = String()
-    var someMainLabel = String()
-    var someOtherLabel = String()
-  
-    // prepare func
     var timerTitle = String()
     var timerMain = String()
-    var timerOther = String()
-
-    var container: NSPersistentContainer!
     
     @IBOutlet weak var changeDatePicker: UIDatePicker!
     
@@ -33,6 +24,9 @@ class timeContentTVC: UITableViewController {
     @IBOutlet weak var changeTimeMain: UITextField!
     
     @IBOutlet weak var changeTimeOther: UITextView!
+    
+    
+//TimeNotification
     
     func timeNotification() {
     let content = UNMutableNotificationContent()
@@ -50,21 +44,21 @@ class timeContentTVC: UITableViewController {
        
          UNUserNotificationCenter.current().add(request, withCompletionHandler: nil)
      }
+
+//MARK: - viewDidLoad
     
     override func viewDidLoad() {
         super.viewDidLoad()
     
         if let updateTimeCoreData = updateTimeCoreData{
             changeDatePicker.date = updateTimeCoreData.datePicker!
-            changeTimeTitle.text = updateTimeCoreData.timerTitle
-            changeTimeMain.text = updateTimeCoreData.timerMainTask
-            changeTimeOther.text = updateTimeCoreData.timerOtherTask
+            changeTimeTitle.text  = updateTimeCoreData.timerTitle
+            changeTimeMain.text   = updateTimeCoreData.timerMainTask
+            changeTimeOther.text  = updateTimeCoreData.timerOtherTask
         }
-        
-        dateLabel   = changeDatePicker.date
-        timerTitle  = changeTimeTitle.text!
-        timerMain   = changeTimeMain.text!
-        timerOther  = changeTimeOther.text!
+    //傳遞資料給推播
+        timerTitle      = changeTimeTitle.text!
+        timerMain       = changeTimeMain.text!
     }
   
 //MARK: - updating

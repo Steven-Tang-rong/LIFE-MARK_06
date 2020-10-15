@@ -1,45 +1,43 @@
 //
-//  addTimeTVC.swift
+//  dayContantTVC.swift
 //  LIFE MARK
 //
-//  Created by TANG,QI-RONG on 2020/7/6.
+//  Created by TANG,QI-RONG on 2020/10/9.
 //  Copyright © 2020 Steven. All rights reserved.
 //
 
 import UIKit
 import CoreData
 
-class addTimeTVC: UITableViewController {
+class dayContantTVC: UITableViewController {
 
-    var addTimeCoreData: LifeMarker!
-    var addTimeCellTitleText = String()
-    var addTimeCellMainText = String()
-    var addTimeCellOtherText = String()
+    var updateDayCoreData: DayPage!
+    var container: NSPersistentContainer!
     
-    @IBOutlet weak var addTimeDatePicker: UIDatePicker!
-
-    @IBOutlet weak var addTimeTitleTextField: UITextField!
+    var dayTitle = String()
+    var dayMain = String()
     
-    @IBOutlet weak var addTimeMainTextField: UITextField!
     
-    @IBOutlet weak var addTImeOtherTextView: UITextView!
+    @IBOutlet weak var changeDayDatePicker: UIDatePicker!
     
-    @IBAction func addTimeDatePickerAction(_ sender: Any) {
-        // 設置要顯示在 UILabel 的日期時間格式
-        addTimeDatePicker.locale = Locale(identifier: "zh_TW")
-        addTimeDatePicker.datePickerMode = .time
-            
-    }
-         
-    func timeNotification() {
+    
+    @IBOutlet weak var changeDayTitle: UITextField!
+    
+    @IBOutlet weak var changeDayMain: UITextField!
+    
+    @IBOutlet weak var changeDayOther: UITextView!
+    
+//TimeNotification
+    
+    func dayNotification() {
     let content = UNMutableNotificationContent()
-        content.title       =  addTimeTitleTextField.text!
-        content.subtitle    =  addTimeMainTextField.text!
+        content.title       =  dayTitle
+        content.subtitle    =  dayMain
         content.badge       = 1
         content.sound       = UNNotificationSound(named:UNNotificationSoundName(rawValue: "Gintama.aiff"))
           
-        let date            = addTimeDatePicker.date
-        let components      = Calendar.current.dateComponents([ .hour, .minute], from: date)
+        let date            = changeDayDatePicker.date
+        let components      = Calendar.current.dateComponents([.day , .hour, .minute], from: date)
         let trigger         = UNCalendarNotificationTrigger(dateMatching: components,
                                                               repeats: false)
         let request         = UNNotificationRequest(identifier: "notificationl",
@@ -48,11 +46,34 @@ class addTimeTVC: UITableViewController {
          UNUserNotificationCenter.current().add(request, withCompletionHandler: nil)
      }
     
-
+//MARK: - viewDidLoad
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
+        if let updateDayCoreData = updateDayCoreData{
+            changeDayDatePicker.date = updateDayCoreData.dayPicker!
+            changeDayTitle.text      = updateDayCoreData.dayTitle
+            changeDayMain.text       = updateDayCoreData.dayMainTask
+            changeDayOther.text      = updateDayCoreData.dayOtherTask
+        }
+    //傳遞資料給推播
+        dayTitle = changeDayTitle.text!
+        dayMain  = changeDayMain.text!
     }
+    
+//MARK: - updating
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
+        updateDayCoreData.dayPicker    = changeDayDatePicker.date
+        updateDayCoreData.dayTitle     = changeDayTitle.text
+        updateDayCoreData.dayMainTask  = changeDayMain.text
+        updateDayCoreData.dayOtherTask = changeDayOther.text
+        
+        dayNotification()
+    }
+    
 
     // MARK: - Table view data source
 
@@ -65,45 +86,7 @@ class addTimeTVC: UITableViewController {
         // #warning Incomplete implementation, return the number of rows
         return 4
     }
-    
-    @IBAction func saveButtonTapped(_ sender: Any) {
-        
-        //取得AppDelegate內容
-        if let appDelegate = (UIApplication.shared.delegate as? AppDelegate) {
-            addTimeCoreData = LifeMarker(context: appDelegate.persistentContainer.viewContext)
-            
-            addTimeCoreData.datePicker = addTimeDatePicker.date
-           
-            //標題
-            if addTimeTitleTextField.text != "" {
-                addTimeCoreData.timerTitle = addTimeTitleTextField.text
-            }else {
-                addTimeTitleTextField.text = "沒有輸入標題"
-                addTimeCoreData.timerTitle = addTimeTitleTextField.text
-            }
-            
-            //主題
-            if addTimeMainTextField.text != "" {
-                addTimeCoreData.timerMainTask = addTimeMainTextField.text
-            }else {
-                addTimeMainTextField.text = "沒有輸入訊息"
-                addTimeCoreData.timerMainTask = addTimeMainTextField.text
-            }
-            
-            //次要
-            addTimeCoreData.timerOtherTask = addTImeOtherTextView.text
-            //Switch
-            addTimeCoreData.timerSwitch = true
-            
-            timeNotification()
-            print("Saving data to contect")
-            appDelegate.saveContext()
-        }
-    
-        dismiss(animated: true, completion: nil)
 
- }
-  
     /*
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
@@ -159,17 +142,4 @@ class addTimeTVC: UITableViewController {
     }
     */
 
-    /*
-    let formatter = DateFormatter()
-    formatter.locale = Locale(identifier: "zh_TW")
-    formatter.timeStyle = .short
-
-    
-    let formatterString = formatter.string(from: myDatePickerData.date)*/
 }
-
-
-
-
-
-

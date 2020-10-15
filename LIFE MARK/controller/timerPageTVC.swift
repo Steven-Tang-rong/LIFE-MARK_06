@@ -13,12 +13,13 @@ class timerPageTVC: UITableViewController, NSFetchedResultsControllerDelegate {
 
     var timePageData: [LifeMarker] = []
     var fetchResultController: NSFetchedResultsController<LifeMarker>!
-
-    var cellTimeDate = Date()
-    var cellTitleText = String()
-    var cellMainText = String()
-    var cellOtherText = String()
     var container: NSPersistentContainer!
+    
+    
+    var cellTimeDate = Date()
+    var cellTimeTitleText = String()
+    var cellTimeMainText = String()
+    var cellTimeOtherText = String()
     
     @IBOutlet var emptyTimePageView: UIView!
         
@@ -28,9 +29,9 @@ class timerPageTVC: UITableViewController, NSFetchedResultsControllerDelegate {
     
    
     
-    //MARK: - unwindSegue（更新資料）
+    //MARK: - timeContentTVC（更新資料）
     
-    @IBAction func unwindTotimePageTVC(_ unwindSegue: UIStoryboardSegue) {
+    @IBAction func unwindTimePageTVC(_ unwindSegue: UIStoryboardSegue) {
         
        if let sourceViewController = unwindSegue.source as? timeContentTVC, let updateTimeCoreData = sourceViewController.updateTimeCoreData {
         
@@ -45,11 +46,12 @@ class timerPageTVC: UITableViewController, NSFetchedResultsControllerDelegate {
         tableView.reloadData()
     }
     
-
+    //MARK: - timeNotification
+    
     func timeNotification() {
         let content = UNMutableNotificationContent()
-            content.title       =  cellTitleText
-            content.subtitle    =  cellMainText
+            content.title       =  cellTimeTitleText
+            content.subtitle    =  cellTimeMainText
             content.badge       = 1
             content.sound       = UNNotificationSound(named:UNNotificationSoundName(rawValue: "Gintama.aiff"))
               
@@ -67,13 +69,14 @@ class timerPageTVC: UITableViewController, NSFetchedResultsControllerDelegate {
         UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: ["notificationl"])
     }
  
-//Notification IBAction
+//MARK: - Notification Switch
+    
     @IBAction func notificationSwitch(_ sender: UISwitch) {
             let point = sender.convert(CGPoint.zero, to: tableView)
             if let indexPath = tableView.indexPathForRow(at: point) {
+                print(point)
                 timePageData[indexPath.row].timerSwitch = sender.isOn
-               print(point)
-                                
+               
                 if sender.isOn == timePageData[indexPath.row].timerSwitch {
                    print("Switch true")
                    timeNotification()
@@ -86,22 +89,20 @@ class timerPageTVC: UITableViewController, NSFetchedResultsControllerDelegate {
             container.saveContext()
         }
     }
-    //MARK: - viewDidLoad
+//MARK: - viewDidLoad
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // Prepare the empty view
         tableView.backgroundView = emptyTimePageView
         tableView.backgroundView?.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
         tableView.backgroundView?.isHidden = true
         
-        
-        //Fetch data from CoreData
+//Coredata取資料
         let fetchRequest: NSFetchRequest<LifeMarker> = LifeMarker.fetchRequest()
         let sortDescriptor = NSSortDescriptor(key: "timerTitle", ascending: true)
         fetchRequest.sortDescriptors = [sortDescriptor]
-        
+    
         if let appDelegate = (UIApplication.shared.delegate as? AppDelegate) {
             let context = appDelegate.persistentContainer.viewContext
             fetchResultController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: context, sectionNameKeyPath: nil, cacheName: nil)
@@ -146,37 +147,37 @@ class timerPageTVC: UITableViewController, NSFetchedResultsControllerDelegate {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as? timerPageTableViewCell else { return UITableViewCell() }
 
         cellTimeDate = timePageData[indexPath.row].datePicker!
-        cellTitleText = timePageData[indexPath.row].timerTitle!
-        cellMainText = timePageData[indexPath.row].timerMainTask!
+        cellTimeTitleText = timePageData[indexPath.row].timerTitle!
+        cellTimeMainText = timePageData[indexPath.row].timerMainTask!
    
         cell.timerSwitchOutlet.isOn = timePageData[indexPath.row].timerSwitch
         
+        //設定formatter
         if timePageData[indexPath.row].datePicker != nil {
             let formatter = DateFormatter()
                 formatter.locale        = Locale(identifier: "zh_TW")
                 formatter.timeStyle     = .short
-            let formatterString     = formatter.string(from: cellTimeDate)
+            let formatterString         = formatter.string(from: cellTimeDate)
                 cell.showSetTime.text   = formatterString
             }
         
         //標題資料
         if timePageData[indexPath.row].timerTitle != nil {
             cell.timerTitle.text    = timePageData[indexPath.row].timerTitle
-            cellTitleText           = cell.timerTitle.text!
+            cellTimeTitleText           = cell.timerTitle.text!
         }
         
         //主題資料
         if timePageData[indexPath.row].timerMainTask != nil {
             cell.timerMainTask.text = timePageData[indexPath.row].timerMainTask
-            cellMainText            = cell.timerMainTask.text!
+            cellTimeMainText            = cell.timerMainTask.text!
         }
-        
         
         //其他事項資料
         if timePageData[indexPath.row].timerOtherTask != nil {
-            cellOtherText       = timePageData[indexPath.row].timerOtherTask!
+            cellTimeOtherText       = timePageData[indexPath.row].timerOtherTask!
         }else {
-            cellOtherText = "輸入事項"
+            cellTimeOtherText = "輸入事項"
         }
         
         return cell
@@ -254,8 +255,6 @@ class timerPageTVC: UITableViewController, NSFetchedResultsControllerDelegate {
         let swipeConfiguration = UISwipeActionsConfiguration(actions: [deleteAction])
         
         return swipeConfiguration
-        
-        
         
     }
     
