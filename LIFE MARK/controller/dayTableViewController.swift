@@ -205,6 +205,7 @@ class dayTableViewController: UITableViewController,NSFetchedResultsControllerDe
                 let context = appDelegate.persistentContainer.viewContext
                 let dayToDelete = self.fetchResultController.object(at: indexPath)
                 context.delete(dayToDelete)
+                self.removeDayNotification()
                 
                 appDelegate.saveContext()
             }

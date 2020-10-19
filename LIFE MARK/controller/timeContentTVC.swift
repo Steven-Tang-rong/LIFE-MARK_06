@@ -25,6 +25,12 @@ class timeContentTVC: UITableViewController {
     
     @IBOutlet weak var changeTimeOther: UITextView!
     
+    @IBAction func dismissTitleKeyBoard(_ sender: Any) {
+    }
+    
+    @IBAction func dissmissMainKeyBoard(_ sender: Any) {
+    }
+    
     
 //TimeNotification
     
@@ -147,4 +153,16 @@ class timeContentTVC: UITableViewController {
     }
     */
 
+}
+
+extension timeContentTVC: UITextViewDelegate {
+    
+    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+        if text == "\n" {
+            textView.resignFirstResponder()
+            return false
+        }
+        return true
+    }
+    
 }

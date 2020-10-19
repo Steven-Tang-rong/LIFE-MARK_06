@@ -9,7 +9,7 @@
 import UIKit
 import CoreData
 
-class addTimeTVC: UITableViewController {
+class addTimeTVC: UITableViewController, UITextFieldDelegate {
 
     var addTimeCoreData: LifeMarker!
     var addTimeCellTitleText = String()
@@ -18,11 +18,25 @@ class addTimeTVC: UITableViewController {
     
     @IBOutlet weak var addTimeDatePicker: UIDatePicker!
 
-    @IBOutlet weak var addTimeTitleTextField: UITextField!
+    @IBOutlet weak var addTimeTitleTextField: UITextField! {
+        didSet{
+            addTimeTitleTextField.tag = 1
+            addTimeTitleTextField.delegate = self
+        }
+    }
+
+    @IBOutlet weak var addTimeMainTextField: UITextField! {
+        didSet{
+            addTimeMainTextField.tag = 2
+            addTimeMainTextField.delegate = self
+        }
+    }
     
-    @IBOutlet weak var addTimeMainTextField: UITextField!
-    
-    @IBOutlet weak var addTImeOtherTextView: UITextView!
+    @IBOutlet weak var addTImeOtherTextView: UITextView! {
+        didSet {
+            addTImeOtherTextView.tag = 3
+        }
+    }
     
     @IBAction func addTimeDatePickerAction(_ sender: Any) {
         // 設置要顯示在 UILabel 的日期時間格式
@@ -30,7 +44,8 @@ class addTimeTVC: UITableViewController {
         addTimeDatePicker.datePickerMode = .time
             
     }
-         
+    
+
     func timeNotification() {
     let content = UNMutableNotificationContent()
         content.title       =  addTimeTitleTextField.text!
@@ -51,7 +66,29 @@ class addTimeTVC: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
+        //點擊空白區收鍵盤
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(dismissKeyBoard))
+    
+        self.view.addGestureRecognizer(tap)
+    }
+    
+    @objc func dismissKeyBoard() {
+        self.view.endEditing(true)
+    }
+    
+   /* func textFieldReturn(_ textView: UITextView) -> Bool {
+        textView.resignFirstResponder()
+            
+        return true
+    }*/
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        if let nextTextField = view.viewWithTag(textField.tag + 1) {
+            textField.resignFirstResponder()
+            nextTextField.becomeFirstResponder()
+       }
+        return true
     }
 
     // MARK: - Table view data source
@@ -102,74 +139,20 @@ class addTimeTVC: UITableViewController {
     
         dismiss(animated: true, completion: nil)
 
- }
-  
-    /*
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
+  }
 
-        // Configure the cell...
-
-        return cell
-    }
-    */
-
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
-        return true
-    }
-    */
-
-    /*
-    // Override to support editing the table view.
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            // Delete the row from the data source
-            tableView.deleteRows(at: [indexPath], with: .fade)
-        } else if editingStyle == .insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
-    }
-    */
-
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
-
-    }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
-    }
-    */
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
-    /*
-    let formatter = DateFormatter()
-    formatter.locale = Locale(identifier: "zh_TW")
-    formatter.timeStyle = .short
-
-    
-    let formatterString = formatter.string(from: myDatePickerData.date)*/
 }
 
-
-
-
+extension addTimeTVC: UITextViewDelegate {
+    
+    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+        if text == "\n" {
+            textView.resignFirstResponder()
+            return false
+        }
+        return true
+    }
+    
+}
 
 

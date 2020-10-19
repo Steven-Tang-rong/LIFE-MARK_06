@@ -9,7 +9,7 @@
 import UIKit
 import CoreData
 
-class addDayTVC: UITableViewController {
+class addDayTVC: UITableViewController, UITextFieldDelegate {
 
     var addDayCoreData: DayPage!
     var addDayCellTitleText = String()
@@ -18,11 +18,25 @@ class addDayTVC: UITableViewController {
     
     @IBOutlet weak var addDayDatePicker: UIDatePicker!
     
-    @IBOutlet weak var addDayTitleTextField: UITextField!
+    @IBOutlet weak var addDayTitleTextField: UITextField! {
+        didSet{
+            addDayTitleTextField.tag = 1
+            addDayTitleTextField.delegate = self
+        }
+    }
     
-    @IBOutlet weak var addDayMainTextField: UITextField!
+    @IBOutlet weak var addDayMainTextField: UITextField! {
+        didSet{
+            addDayMainTextField.tag = 2
+            addDayMainTextField.delegate = self
+        }
+    }
     
-    @IBOutlet weak var addDayOtherTextView: UITextView!
+    @IBOutlet weak var addDayOtherTextView: UITextView! {
+        didSet{
+            addDayOtherTextView.tag = 3
+        }
+    }
     
     @IBAction func addDayDatePickerAction(_ sender: Any) {
         addDayDatePicker.locale = Locale(identifier: "zh_TW")
@@ -49,7 +63,24 @@ class addDayTVC: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        //點擊空白區收鍵盤
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(dismissKeyBoard))
+        
+        self.view.addGestureRecognizer(tap)
     }
+    
+    @objc func dismissKeyBoard() {
+        self.view.endEditing(true)
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        if let nextTextField = view.viewWithTag(textField.tag + 1) {
+            textField.resignFirstResponder()
+            nextTextField.becomeFirstResponder()
+       }
+        return true
+    }
+    
 
     // MARK: - Table view data source
 
@@ -95,6 +126,18 @@ class addDayTVC: UITableViewController {
         }
         dismiss(animated: true, completion: nil)
 
+    }
+    
+}
+
+extension addDayTVC: UITextViewDelegate {
+    
+    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+        if text == "\n" {
+            textView.resignFirstResponder()
+            return false
+        }
+        return true
     }
     
 }

@@ -241,6 +241,7 @@ class timerPageTVC: UITableViewController, NSFetchedResultsControllerDelegate {
                 let context = appDelegate.persistentContainer.viewContext
                 let timeToDelete = self.fetchResultController.object(at: indexPath)
                 context.delete(timeToDelete)
+                self.removeTimeNotification()
                 
                 appDelegate.saveContext()
             }
@@ -253,6 +254,7 @@ class timerPageTVC: UITableViewController, NSFetchedResultsControllerDelegate {
         
         
         let swipeConfiguration = UISwipeActionsConfiguration(actions: [deleteAction])
+        
         
         return swipeConfiguration
         

@@ -27,6 +27,13 @@ class dayContantTVC: UITableViewController {
     
     @IBOutlet weak var changeDayOther: UITextView!
     
+    @IBAction func dismissTitleKeyBoard(_ sender: Any) {
+    }
+    
+    @IBAction func dismissMainKeyBoard(_ sender: Any) {
+    }
+    
+    
 //TimeNotification
     
     func dayNotification() {
@@ -142,4 +149,15 @@ class dayContantTVC: UITableViewController {
     }
     */
 
+}
+
+extension dayContantTVC: UITextViewDelegate {
+    
+    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+        if text == "\n" {
+            textView.resignFirstResponder()
+            return false
+        }
+        return true
+    }
 }
